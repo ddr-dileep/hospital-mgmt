@@ -1,11 +1,14 @@
+import { config } from "dotenv";
+config();
 import express from "express";
 import dbConnection from "../config/db-config";
-const app = express();
 
-dbConnection()
+const APP_PORT = process.env.APP_PORT || 3000;
+const app = express();
 
 app.use(express.json());
 
-app.listen(5000, () => {
-  console.log("Server is running on port 5000");
+app.listen(APP_PORT, () => {
+  console.log(`App listening on http://localhost:${APP_PORT}`);
+  dbConnection(); // database connection
 });

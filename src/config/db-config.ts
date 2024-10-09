@@ -1,15 +1,16 @@
 import mongoose from "mongoose";
 
+
 const dbConnection = async () => {
-    try {
+  try {
+    const dbConnectionString = process.env.DB_CONNECTION_URL;
 
-        await mongoose.connect("mongodb://localhost:27017/hospital_management", {
-            dbName: "hospital_management",
-        });
-
-    } catch (error) {
-        console.log("error in db connection");
-    }
-}
+    await mongoose.connect(dbConnectionString!, {
+      dbName: "hospital_management",
+    });
+  } catch (error) {
+    console.log("error in db connection", error);
+  }
+};
 
 export default dbConnection;
