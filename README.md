@@ -47,7 +47,7 @@ node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 - Go to the project directory
 
 ```bash
-  cd SMS-CHATTING-APP
+  cd hospital-mgmt
 ```
 
 - Install dependencies
