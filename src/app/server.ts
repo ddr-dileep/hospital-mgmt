@@ -1,5 +1,8 @@
-import express, { Request, Response } from "express";
+import express from "express";
+import dbConnection from "../config/db-config";
 const app = express();
+
+dbConnection()
 
 app.use(express.json());
 
