@@ -41,7 +41,7 @@ node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 - Clone the project
 
 ```bash
-  git clone https://github.com/ddr-dileep/SMS-CHATTING-APP
+  git clone https://github.com/ddr-dileep/hospital-mgmt.git
 ```
 
 - Go to the project directory
