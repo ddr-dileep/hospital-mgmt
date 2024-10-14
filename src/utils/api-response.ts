@@ -9,11 +9,19 @@ export const API_RESPONSE = {
   },
 
   ERROR: (data: any) => {
+    let errorMessage = data?.message || "Something went wrong";
+
+    if (data?.code === 11000) {
+      const key = Object.keys(data?.keyValue)[0]; // Get the field causing the duplicate
+      errorMessage = `Duplicate entry for ${key}: ${data.keyValue[key]}`;
+      data = {};
+    }
+
     return {
-      errors: { ...data, message: undefined },
       success: false,
       error: true,
-      message: data?.message || "Something went wrong",
+      message: errorMessage,
+      errors: { ...data, message: undefined },
     };
   },
 };
