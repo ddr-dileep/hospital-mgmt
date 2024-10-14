@@ -11,6 +11,7 @@ const workerSchema: Schema = new Schema(
     isWorking: { type: Boolean, default: true },
     joinDate: { type: Date, default: Date.now() },
     leaveDate: { type: Date },
+    role: { type: String, default: "worker" },
   },
   { timestamps: true }
 );
@@ -28,4 +29,5 @@ export interface IpropsWorker extends Document {
   isWorking: boolean;
   joinDate: Date;
   leaveDate: Date;
+  role: string;
 }
