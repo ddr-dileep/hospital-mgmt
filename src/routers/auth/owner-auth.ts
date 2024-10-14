@@ -10,3 +10,5 @@ ownerRouter.post(
   ownerMiddleware.create,
   ownerController.ownerRegistration
 );
+
+ownerRouter.post("/login", ownerMiddleware.login, ownerController.ownnerLogin);
