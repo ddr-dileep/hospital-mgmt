@@ -1,0 +1,5 @@
+const ownerController = {
+    ownerRegistration: async () =>{
+        
+    }
+}
