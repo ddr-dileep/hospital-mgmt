@@ -5,6 +5,8 @@ const dbConnection = async () => {
   try {
     const dbConnectionString = process.env.DB_CONNECTION_URL;
 
+    console.log("connetion", dbConnectionString)
+
     await mongoose.connect(dbConnectionString!, {
       dbName: "hospital_management",
     });
