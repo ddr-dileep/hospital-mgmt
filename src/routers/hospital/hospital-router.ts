@@ -19,3 +19,9 @@ hospitalRouter.get(
   "/get-hospital/:hospitalId",
   hospitalController.getHospitalById
 );
+
+hospitalRouter.patch(
+  "/update/:hospitalId",
+  authTokenMiddleware,
+  hospitalController.updateHospital
+);
