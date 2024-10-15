@@ -31,3 +31,9 @@ hospitalRouter.delete(
   authTokenMiddleware,
   hospitalController.deleteHospital
 );
+
+hospitalRouter.delete(
+  "/restore/:hospitalId",
+  authTokenMiddleware,
+  hospitalController.restoreHospital
+);
