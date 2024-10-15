@@ -2,19 +2,16 @@ import { Document, model, Schema } from "mongoose";
 
 const hospitalSchema: Schema = new Schema(
   {
-    name: { type: String, required: true },
-    address: { type: String, required: true },
-    phone: { type: String, required: true },
+    name: { type: String, required: true, true: true },
+    address: { type: String, required: true, unique: true, true: true },
+    phone: { type: String, required: true, unique: true, true: true },
     email: { type: String, required: true, unique: true },
-    doctors: [{ type: Schema.Types.ObjectId, ref: "Doctor" }],
-    patients: [{ type: Schema.Types.ObjectId, ref: "Patient" }],
-    workers: [{ type: Schema.Types.ObjectId, ref: "Worker" }],
-    services: [{ type: Schema.Types.ObjectId, ref: "Service" }],
     isDeleted: { type: Boolean, default: false },
-    openingHours: { type: Date, default: Date.now() },
-    closingHours: { type: Date, default: Date.now() },
+    openingHours: { type: String, default: "10AM" },
+    closingHours: { type: String, default: "6PM" },
     createdBy: { type: Schema.Types.ObjectId, ref: "Owner" },
     updatedBy: { type: Schema.Types.ObjectId, ref: "Owner" },
+    speciliation: { type: String, default: "General Specification" },
   },
   { timestamps: true }
 );
