@@ -15,6 +15,15 @@ const adminSchema: Schema = new Schema(
       type: String,
       required: true,
     },
+    createdBy: {
+      type: Schema.Types.ObjectId,
+      refPath: "createdByUser",
+    },
+    createdByUser: {
+      type: String,
+      required: true,
+      enum: ["Owner", "Admin"],
+    },
     isDeleleted: {
       type: Boolean,
       default: false,
@@ -33,6 +42,7 @@ const adminSchema: Schema = new Schema(
     hospital: {
       type: Schema.Types.ObjectId,
       ref: "Hospital",
+      required: true,
     },
   },
   { timestamps: true }
