@@ -25,3 +25,9 @@ hospitalRouter.patch(
   authTokenMiddleware,
   hospitalController.updateHospital
 );
+
+hospitalRouter.delete(
+  "/delete/:hospitalId",
+  authTokenMiddleware,
+  hospitalController.deleteHospital
+);

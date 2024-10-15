@@ -112,4 +112,40 @@ export const hospitalController = {
       res.status(500).json(API_RESPONSE.ERROR(e));
     }
   },
+
+  deleteHospital: async (req: Request | any, res: Response): Promise<any> => {
+    try {
+      const owner = await Owner.findById(req.user.id);
+      if (!owner) {
+        return res
+          .status(401)
+          .json(API_RESPONSE.ERROR({ message: "Not authorized to delete." }));
+      }
+      if (!owner?.isDeleted) {
+        return res
+          .status(403)
+          .json(API_RESPONSE.ERROR({ message: "Owner account is deleted" }));
+      }
+      const hospital = await Hospital.findByIdAndUpdate(
+        req.params.hospitalId,
+        { isDeleted: true },
+        { new: true }
+      );
+
+      if (!hospital) {
+        return res
+          .status(404)
+          .json(API_RESPONSE.ERROR({ message: "Hospital not found" }));
+      }
+
+      res.status(200).json(
+        API_RESPONSE.SUCCESS({
+          hospital,
+          message: "Hospital deleted successfully",
+        })
+      );
+    } catch (e) {
+      res.status(500).json(API_RESPONSE.ERROR(e));
+    }
+  },
 };
