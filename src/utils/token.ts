@@ -6,3 +6,12 @@ export const generateToken = async (data: any) => {
   });
   return token;
 };
+
+export const verifyToken = async (token: string): Promise<any> => {
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!);
+    return decoded;
+  } catch (error) {
+    throw new Error("Invalid token");
+  }
+};
