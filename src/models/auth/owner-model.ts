@@ -18,9 +18,6 @@ const ownerSchema: Schema = new Schema(
       type: String,
       required: true,
     },
-    profilePic: {
-      type: String,
-    },
     address: {
       type: String,
     },
