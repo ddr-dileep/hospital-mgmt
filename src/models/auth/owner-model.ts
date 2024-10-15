@@ -6,6 +6,9 @@ const ownerSchema: Schema = new Schema(
       type: String,
       required: true,
     },
+    profilePicture: {
+      type: String,
+    },
     email: {
       type: String,
       required: true,

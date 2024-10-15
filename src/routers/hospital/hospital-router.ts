@@ -13,8 +13,9 @@ hospitalRouter.post(
   hospitalController.createHospital
 );
 
+hospitalRouter.get("/get-hospitals", hospitalController.getHospitals);
+
 hospitalRouter.get(
-  "/get-hospitals",
-  authTokenMiddleware,
-  hospitalController.getHospitals
+  "/get-hospital/:hospitalId",
+  hospitalController.getHospitalById
 );

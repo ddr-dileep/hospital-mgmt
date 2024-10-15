@@ -46,4 +46,26 @@ export const hospitalController = {
       res.status(500).json(API_RESPONSE.ERROR(e));
     }
   },
+
+  getHospitalById: async (req: Request | any, res: Response): Promise<any> => {
+    try {
+      const hospital = await Hospital.findById(req.params.hospitalId).populate(
+        "createdBy",
+        "name email profilePicture"
+      );
+      if (!hospital) {
+        return res
+          .status(404)
+          .json(API_RESPONSE.ERROR({ message: "Hospital not found" }));
+      }
+      res.status(200).json(
+        API_RESPONSE.SUCCESS({
+          hospital,
+          message: "Hospital fetched successfully",
+        })
+      );
+    } catch (e) {
+      res.status(500).json(API_RESPONSE.ERROR(e));
+    }
+  },
 };
