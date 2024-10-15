@@ -12,3 +12,9 @@ hospitalRouter.post(
   authTokenMiddleware,
   hospitalController.createHospital
 );
+
+hospitalRouter.get(
+  "/get-hospitals",
+  authTokenMiddleware,
+  hospitalController.getHospitals
+);

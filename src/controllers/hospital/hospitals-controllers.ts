@@ -28,4 +28,22 @@ export const hospitalController = {
       res.status(500).json(API_RESPONSE.ERROR(e));
     }
   },
+
+  getHospitals: async (req: Request | any, res: Response): Promise<any> => {
+    try {
+      const hospitals = await Hospital.find()
+        .populate("createdBy", "name")
+        .select("name address phone email speciliation");
+
+      res.status(200).json(
+        API_RESPONSE.SUCCESS({
+          count: hospitals?.length,
+          hospitals,
+          message: "Hospitals featched successfully",
+        })
+      );
+    } catch (e) {
+      res.status(500).json(API_RESPONSE.ERROR(e));
+    }
+  },
 };
