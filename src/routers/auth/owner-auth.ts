@@ -19,3 +19,5 @@ ownerRouter.get(
   authTokenMiddleware,
   ownerController.ownerInfo
 );
+
+ownerRouter.patch("/update", authTokenMiddleware, ownerController.update);

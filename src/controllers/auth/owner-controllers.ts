@@ -69,9 +69,33 @@ export const ownerController = {
           })
         );
       }
-
       res.status(200).json(API_RESPONSE.SUCCESS({ owner }));
     } catch (error: any) {
+      res.status(500).json(API_RESPONSE.ERROR(error));
+    }
+  },
+
+  update: async (req: Request | any, res: Response): Promise<any> => {
+    try {
+      req.body.password = undefined;
+
+      const owner = await Owner.findByIdAndUpdate(req.user.id, req.body, {
+        new: true,
+        runValidators: true,
+      }).select("name email createdAt isDeleted updatedAt");
+
+      if (!owner) {
+        return res
+          .status(404)
+          .json(API_RESPONSE.ERROR({ message: "Owner not found" }));
+      }
+
+      res
+        .status(200)
+        .json(
+          API_RESPONSE.SUCCESS({ owner, message: "Owner update successfully" })
+        );
+    } catch (error) {
       res.status(500).json(API_RESPONSE.ERROR(error));
     }
   },
