@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { API_RESPONSE } from "../utils/api-response";
-import { verifyToken } from "../utils/token";
+import { API_RESPONSE } from "../../utils/api-response";
+import { verifyToken } from "../../utils/token";
 
 // auth middleware
 export const authTokenMiddleware = async (

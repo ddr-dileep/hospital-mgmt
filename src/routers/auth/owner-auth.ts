@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { ownerController } from "../../controllers/auth/owner-controllers";
 import { ownerMiddleware } from "../../middlewares/auth/owner-auth-middleware";
-import { authTokenMiddleware } from "../../middlewares/authTokenMiddleware";
+import { authTokenMiddleware } from "../../middlewares/auth/authTokenMiddleware";
 
 const ownerRouter = Router();
 export default ownerRouter;

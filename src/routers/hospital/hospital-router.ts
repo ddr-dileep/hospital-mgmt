@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { hospitalController } from "../../controllers/hospital/hospitals-controllers";
 import { hospitalMiddleware } from "../../middlewares/hospital/hospital-middlewares";
-import { authTokenMiddleware } from "../../middlewares/authTokenMiddleware";
+import { authTokenMiddleware } from "../../middlewares/auth/authTokenMiddleware";
 
 const hospitalRouter = Router();
 export default hospitalRouter;
