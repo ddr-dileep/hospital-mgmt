@@ -23,3 +23,9 @@ ownerRouter.get(
 ownerRouter.patch("/update", authTokenMiddleware, ownerController.update);
 
 ownerRouter.delete("/delete", authTokenMiddleware, ownerController.delete);
+
+ownerRouter.patch(
+  "/restore-account",
+  authTokenMiddleware,
+  ownerController.restoreAccount
+);

@@ -123,4 +123,25 @@ export const ownerController = {
       res.status(500).json(API_RESPONSE.ERROR(error));
     }
   },
+
+  restoreAccount: async (req: Request | any, res: Response): Promise<any> => {
+    try {
+      const owner = await Owner.findByIdAndUpdate(req.user.id, {
+        isDeleted: false,
+      });
+      if (!owner) {
+        return res
+          .status(404)
+          .json(API_RESPONSE.ERROR({ message: "Owner not found" }));
+      }
+
+      res
+        .status(200)
+        .json(
+          API_RESPONSE.SUCCESS({ owner, message: "Owner restore successfully" })
+        );
+    } catch (error: any) {
+      res.status(500).json(API_RESPONSE.ERROR(error));
+    }
+  },
 };
