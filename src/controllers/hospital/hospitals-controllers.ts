@@ -1,0 +1,31 @@
+import { Request, Response } from "express";
+import { API_RESPONSE } from "../../utils/api-response";
+import Owner from "../../models/auth/owner-model";
+import Hospital from "../../models/hospital/hospital-model";
+
+export const hospitalController = {
+  createHospital: async (req: Request | any, res: Response): Promise<any> => {
+    try {
+      const owner = await Owner.findById(req.user.id);
+      if (!owner?.isDeleted) {
+        return res
+          .status(403)
+          .json(API_RESPONSE.ERROR({ message: "Owner account is deleted" }));
+      }
+
+      const hospital = new Hospital({
+        ...req.body,
+        createdBy: owner._id,
+        updatedBy: owner._id,
+      });
+
+      await hospital.save();
+
+      res
+        .status(201)
+        .json({ hospital, message: "Hospital created successfully" });
+    } catch (e) {
+      res.status(500).json(API_RESPONSE.ERROR(e));
+    }
+  },
+};
