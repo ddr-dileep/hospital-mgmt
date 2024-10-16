@@ -15,8 +15,6 @@ adminRouter.post(
   adminControllers.createAdmin
 );
 
-adminRouter.post(
-  "/login",
-  adminMiddleware.login,
-  adminControllers.adminLogin
-);
+adminRouter.post("/login", adminMiddleware.login, adminControllers.adminLogin);
+
+adminRouter.get("/user-info", authTokenMiddleware, adminControllers.adminInfo);

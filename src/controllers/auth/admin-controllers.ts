@@ -96,7 +96,35 @@ export const adminControllers = {
         isDeleted: admin?.isDeleted,
       });
 
-      res.status(200).send({ token, message: "Owner logged in successfully" });
+      res.status(200).send({ token, message: "Admin logged in successfully" });
+    } catch (error) {
+      res.status(500).json(API_RESPONSE.ERROR(error));
+    }
+  },
+
+  adminInfo: async (req: Request | any, res: Response): Promise<any> => {
+    try {
+      const admin: any = await Admin.findById(req.user.id)
+        .populate("hospital")
+        .select("-password -otp");
+      if (!admin) {
+        return res
+          .status(401)
+          .json(API_RESPONSE.ERROR({ message: "Account not found" }));
+      }
+
+      if (admin.isDeleted) {
+        return res
+          .status(403)
+          .json(API_RESPONSE.ERROR({ message: "Account is not active" }));
+      }
+
+      res.status(200).json(
+        API_RESPONSE.SUCCESS({
+          user: admin,
+          message: `Welcome ${admin?.name}`,
+        })
+      );
     } catch (error) {
       res.status(500).json(API_RESPONSE.ERROR(error));
     }
