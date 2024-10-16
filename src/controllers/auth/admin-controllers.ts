@@ -105,8 +105,15 @@ export const adminControllers = {
   adminInfo: async (req: Request | any, res: Response): Promise<any> => {
     try {
       const admin: any = await Admin.findById(req.user.id)
-        .populate("hospital")
-        .select("-password -otp");
+        .populate({
+          path: "hospital",
+          select: "name address isDeleted",
+        })
+        .select("-password -otp -__v -updatedAt -createdAt")
+        .populate({
+          path: "createdBy",
+          select: "name email isDeleted profilePicture",
+        });
       if (!admin) {
         return res
           .status(401)
