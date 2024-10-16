@@ -1,8 +1,10 @@
-import { Request, Response } from "express";
+import { request, Request, Response } from "express";
 import Admin from "../../models/auth/admin-model";
 import Owner from "../../models/auth/owner-model";
 import { API_RESPONSE } from "../../utils/api-response";
 import Hospital from "../../models/hospital/hospital-model";
+import { hashPassword, verifyPassword } from "../../utils/bcrypt";
+import { generateToken } from "../../utils/token";
 
 export const adminControllers = {
   getAdmins: async (req: Request | any, res: Response): Promise<any> => {
@@ -50,13 +52,51 @@ export const adminControllers = {
 
       const admin = new Admin({
         ...req.body,
+        password: await hashPassword(req.body.password),
         createdByUser: "Owner",
         createdBy: req.user.id,
         hospital: hospital?._id,
       });
 
       await admin.save();
-      res.send(API_RESPONSE.SUCCESS({ admin }));
+      res.send(
+        API_RESPONSE.SUCCESS({
+          admin,
+          password: undefined,
+          message: "Admin created successfully",
+        })
+      );
+    } catch (error) {
+      res.status(501).json(API_RESPONSE.ERROR(error));
+    }
+  },
+
+  adminLogin: async (req: Request | any, res: Response): Promise<any> => {
+    try {
+      const { email, password } = req.body;
+
+      const admin: any = await Admin.findOne({ email });
+      if (!admin) {
+        return res
+          .status(401)
+          .json(API_RESPONSE.ERROR({ message: "Invalid credentials" }));
+      }
+
+      const matchedPassword = await verifyPassword(password, admin?.password);
+      if (!matchedPassword) {
+        return res
+          .status(401)
+          .json(API_RESPONSE.ERROR({ message: "Invalid credentials" }));
+      }
+
+      const token = await generateToken({
+        name: admin?.name,
+        email: admin?.email,
+        id: admin?._id,
+        isDeleted: admin?.isDeleted,
+      });
+
+      res.status(200).send({ token, message: "Owner logged in successfully" });
     } catch (error) {
       res.status(500).json(API_RESPONSE.ERROR(error));
     }
