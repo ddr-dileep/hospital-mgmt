@@ -9,6 +9,10 @@ export const verifyPassword = async (
   password: string,
   hashedPassword: string
 ) => {
-  const isMatch: boolean = await bcrypt.compare(password, hashedPassword);
-  return isMatch;
+  try {
+    const isMatch: boolean = await bcrypt.compare(password, hashedPassword);
+    return isMatch;
+  } catch (error) {
+    throw new Error("Invalid password");
+  }
 };
