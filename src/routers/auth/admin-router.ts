@@ -14,3 +14,9 @@ adminRouter.post(
   authTokenMiddleware,
   adminControllers.createAdmin
 );
+
+adminRouter.post(
+  "/login",
+  adminMiddleware.login,
+  adminControllers.adminLogin
+);
