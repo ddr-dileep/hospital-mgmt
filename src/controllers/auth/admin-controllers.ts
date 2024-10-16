@@ -1,4 +1,4 @@
-import { request, Request, Response } from "express";
+import { Request, Response } from "express";
 import Admin from "../../models/auth/admin-model";
 import Owner from "../../models/auth/owner-model";
 import { API_RESPONSE } from "../../utils/api-response";
@@ -130,6 +130,46 @@ export const adminControllers = {
         API_RESPONSE.SUCCESS({
           user: admin,
           message: `Welcome ${admin?.name}`,
+        })
+      );
+    } catch (error) {
+      res.status(500).json(API_RESPONSE.ERROR(error));
+    }
+  },
+
+  updateInfo: async (req: Request | any, res: Response): Promise<any> => {
+    try {
+      const user = await Admin.findById(req.user.id);
+      if (!user) {
+        return res
+          .status(401)
+          .json(
+            API_RESPONSE.ERROR({ message: "Not authorized to update info" })
+          );
+      }
+
+      if (user.isDeleted) {
+        return res
+          .status(403)
+          .json(API_RESPONSE.ERROR({ message: "Account not active" }));
+      }
+
+      // update the admin
+      req.body.password = undefined; // don't need to update the password
+      const updatedUser = await Admin.findByIdAndUpdate(req.user.id, req.body, {
+        new: true,
+        runValidators: true,
+      });
+      if (!updatedUser) {
+        return res
+          .status(400)
+          .json(API_RESPONSE.ERROR({ message: "Invalid request" }));
+      }
+
+      res.status(200).json(
+        API_RESPONSE.SUCCESS({
+          user: updatedUser,
+          message: "User updated successfully",
         })
       );
     } catch (error) {

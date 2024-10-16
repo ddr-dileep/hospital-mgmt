@@ -18,3 +18,5 @@ adminRouter.post(
 adminRouter.post("/login", adminMiddleware.login, adminControllers.adminLogin);
 
 adminRouter.get("/user-info", authTokenMiddleware, adminControllers.adminInfo);
+
+adminRouter.patch("/update", authTokenMiddleware, adminControllers.updateInfo);
