@@ -16,4 +16,18 @@ export const adminMiddleware = {
     }
     next();
   },
+
+  login: (req: Request, res: Response, next: NextFunction): any => {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(400).json(
+        API_RESPONSE.ERROR({
+          email: email ? undefined : "Email is required",
+          password: password ? undefined : "Password is required",
+          message: "All fields are required",
+        })
+      );
+    }
+    next();
+  },
 };
