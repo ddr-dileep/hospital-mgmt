@@ -12,7 +12,7 @@ ownerRouter.post(
   ownerController.ownerRegistration
 );
 
-ownerRouter.post("/login", ownerMiddleware.login, ownerController.ownnerLogin);
+ownerRouter.post("/login", ownerMiddleware.login, ownerController.ownerLogin);
 
 ownerRouter.get(
   "/get-owners-info",

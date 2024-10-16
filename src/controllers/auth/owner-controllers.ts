@@ -19,7 +19,7 @@ export const ownerController = {
     }
   },
 
-  ownnerLogin: async (req: Request, res: Response): Promise<any> => {
+  ownerLogin: async (req: Request, res: Response): Promise<any> => {
     try {
       const { email, password } = req.body;
 

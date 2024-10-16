@@ -34,8 +34,6 @@ export const adminControllers = {
     try {
       const hospital = await Hospital.findById(req?.params?.hospitalId);
 
-      console.log("hospial", hospital);
-
       if (!hospital) {
         return res
           .status(404)
