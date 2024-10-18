@@ -17,7 +17,7 @@
 ## Table of contents
 
 - Library API
-- Swagger docs -> https://auth-api-with-swagger.onrender.com/api-docs/
+- Swagger docs -> https://hospital-mgmt.onrender.com
 
 
 ## Create secreat string
