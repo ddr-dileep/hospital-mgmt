@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import { API_RESPONSE } from "../../utils/api-response";
 
 export const doctorController = {
