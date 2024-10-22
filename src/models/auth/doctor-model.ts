@@ -19,5 +19,8 @@ const doctorSchema: Schema = new Schema(
   { timestamps: true }
 );
 
+doctorSchema.index({ email: 1 });
+doctorSchema.index({ specialization: 1 });
+
 const Doctor = model("Doctor", doctorSchema);
 export default Doctor;

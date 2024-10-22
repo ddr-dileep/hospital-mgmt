@@ -6,6 +6,7 @@ const dbConnection = async () => {
 
     await mongoose.connect(dbConnectionString!, {
       dbName: "hospital_management",
+      serverSelectionTimeoutMS: 30000,
     });
 
     console.log("connected to DB successfully");
