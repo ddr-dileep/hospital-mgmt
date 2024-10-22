@@ -10,3 +10,5 @@ doctorRouter.post(
   doctorMiddleware.create,
   doctorController.createDoctor
 );
+
+doctorRouter.get("/get-all-doctors", doctorController.getAllDoctors);
