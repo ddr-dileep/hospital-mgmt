@@ -14,7 +14,7 @@ export const doctorController = {
       await newDoctor.save();
 
       const doctor = newDoctor;
-      doctor.password = undefined; // Remove password from response before sending back to client
+      doctor.password = undefined;
 
       res.status(200).json(
         API_RESPONSE.SUCCESS({
@@ -27,11 +27,39 @@ export const doctorController = {
     }
   },
 
-  getDoctors: () => {
-    // Implement doctor retrieval logic here
-  },
+  getAllDoctors: async (req: Request, res: Response) => {
+    try {
+      const {
+        name,
+        email,
+        specialization,
+        experience,
+        contactNumber,
+        isDeleted,
+        hospital,
+      } = req.query;
 
-  getDoctorById: () => {
-    // Implement doctor retrieval by ID logic here
+      const filter: any = {};
+
+      if (name) filter.name = { $regex: new RegExp(name as string, "i") };
+      if (email) filter.email = email;
+      if (specialization) filter.specialization = specialization;
+      if (experience) filter.experience = experience;
+      if (contactNumber) filter.contactNumber = contactNumber;
+      if (isDeleted) filter.isDeleted = isDeleted === "true";
+      if (hospital) filter.hospitals = hospital;
+
+      const doctors = await Doctor.find(filter).populate("hospitals");
+
+      res.status(200).json(
+        API_RESPONSE.SUCCESS({
+          count: doctors.length,
+          doctors,
+          message: "Doctor fetched successfully",
+        })
+      );
+    } catch (error) {
+      res.status(400).json(API_RESPONSE.ERROR(error));
+    }
   },
 };
