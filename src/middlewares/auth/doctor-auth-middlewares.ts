@@ -30,4 +30,21 @@ export const doctorMiddleware = {
     }
     next();
   },
+
+  getAllDoctorsOfHospital: (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): any => {
+    const { hospitalId } = req.params;
+
+    if (!hospitalId) {
+      return res.status(403).json(
+        API_RESPONSE.ERROR({
+          message: "hospital Id is required",
+        })
+      );
+    }
+    next();
+  },
 };

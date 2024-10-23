@@ -29,6 +29,7 @@ export const doctorController = {
 
   getAllDoctors: async (req: Request, res: Response) => {
     try {
+      const { hospitalId } = req.params;
       const {
         name,
         email,
@@ -41,6 +42,7 @@ export const doctorController = {
 
       const filter: any = {};
 
+      if (hospitalId) filter.hospitals = hospitalId;
       if (name) filter.name = { $regex: new RegExp(name as string, "i") };
       if (email) filter.email = email;
       if (specialization) filter.specialization = specialization;

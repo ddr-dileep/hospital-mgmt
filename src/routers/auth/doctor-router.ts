@@ -12,3 +12,9 @@ doctorRouter.post(
 );
 
 doctorRouter.get("/get-all-doctors", doctorController.getAllDoctors);
+
+doctorRouter.get(
+  "/get-all-doctors/:hospitalId",
+  doctorMiddleware.getAllDoctorsOfHospital,
+  doctorController.getAllDoctors
+);
