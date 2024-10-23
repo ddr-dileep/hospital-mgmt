@@ -18,3 +18,9 @@ doctorRouter.get(
   doctorMiddleware.getAllDoctorsOfHospital,
   doctorController.getAllDoctors
 );
+
+doctorRouter.get(
+  "/get-doctor/:doctorId",
+  doctorMiddleware.getDoctorById,
+  doctorController.getDoctorById
+);

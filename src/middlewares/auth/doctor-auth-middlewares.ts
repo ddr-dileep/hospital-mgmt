@@ -41,7 +41,20 @@ export const doctorMiddleware = {
     if (!hospitalId) {
       return res.status(403).json(
         API_RESPONSE.ERROR({
-          message: "hospital Id is required",
+          message: "hospital's Id is required",
+        })
+      );
+    }
+    next();
+  },
+
+  getDoctorById: (req: Request, res: Response, next: NextFunction): any => {
+    const { doctorId } = req.params;
+
+    if (!doctorId) {
+      return res.status(403).json(
+        API_RESPONSE.ERROR({
+          message: "Doctor's Id is required",
         })
       );
     }
