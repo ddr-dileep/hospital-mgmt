@@ -1,10 +1,27 @@
 import { Request, Response } from "express";
+import User from "../../models/auth/user-model";
+import { hashPassword, verifyPassword } from "../../utils/bcrypt";
+import { API_RESPONSE } from "../../utils/api-response";
+import { generateToken } from "../../utils/token";
 
-export const registerUserController = async (req: Request, res: Response) => {
-  try {
-    const { name, email, password } = req.body;
-    res.status(200).json({ name: name, email: email, password: password });
-  } catch (err: any) {
-    res.status(400).json({ error: err.message });
-  }
+export const userControllers = {
+  register: async (req: Request, res: Response) => {
+    try {
+      const user = new User({
+        ...req.body,
+        password: await hashPassword(req.body.password),
+      });
+
+      await user.save();
+
+      res.status(200).json(
+        API_RESPONSE.SUCCESS({
+          user,
+          message: "User registered successfully",
+        })
+      );
+    } catch (error: any) {
+      res.status(400).json(API_RESPONSE.SUCCESS(error));
+    }
+  },
 };
