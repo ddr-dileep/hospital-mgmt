@@ -24,4 +24,36 @@ export const userControllers = {
       res.status(400).json(API_RESPONSE.SUCCESS(error));
     }
   },
+
+  login: async (req: Request, res: Response): Promise<any> => {
+    try {
+      const user: any = await User.findOne({ email: req.body.email });
+      if (!user) {
+        return res
+          .status(401)
+          .json(API_RESPONSE.ERROR("Invalid email or password"));
+      }
+
+      const matchedPassword = await verifyPassword(
+        req.body.password,
+        user.password
+      );
+
+      if (!matchedPassword) {
+        return res
+          .status(401)
+          .json(API_RESPONSE.ERROR("Invalid email or password"));
+      }
+
+      const token = await generateToken({
+        name: user.name,
+        email: user.email,
+        id: user._id,
+      });
+
+      res.status(200).send({ token, message: "User logged in successfully" });
+    } catch (error: any) {
+      res.status(400).json(API_RESPONSE.SUCCESS(error));
+    }
+  },
 };

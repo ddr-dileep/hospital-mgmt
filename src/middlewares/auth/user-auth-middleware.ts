@@ -17,4 +17,20 @@ export const userMiddlewares = {
     }
     next();
   },
+
+  login: async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<any> => {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(400).json({
+        email: email ? undefined : "Email is required",
+        password: password ? undefined : "Password is required",
+        message: "All fields are required",
+      });
+    }
+    next();
+  },
 };

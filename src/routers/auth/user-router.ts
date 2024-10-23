@@ -10,3 +10,5 @@ userRouter.post(
   userMiddlewares.register,
   userControllers.register
 );
+
+userRouter.post("/login", userMiddlewares.login, userControllers.login);
