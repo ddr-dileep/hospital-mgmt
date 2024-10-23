@@ -1,11 +1,12 @@
 import { Document, model, Schema } from "mongoose";
 
-const patientSchema: Schema = new Schema(
+const userSchema: Schema = new Schema(
   {
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    phone: { type: String, required: true },
-    address: { type: String, required: true },
+    password: { type: String, required: true },
+    phone: { type: String },
+    address: { type: String },
     gender: {
       type: String,
       enum: ["male", "female", "other"],
@@ -21,10 +22,10 @@ const patientSchema: Schema = new Schema(
   { timestamps: true }
 );
 
-const Patient = model("Patient", patientSchema);
-export default Patient;
+const User = model("User", userSchema);
+export default User;
 
-export interface IPropsPatient extends Document {
+export interface IPropsUser extends Document {
   name: string;
   email: string;
   phone: string;
