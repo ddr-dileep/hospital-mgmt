@@ -86,4 +86,30 @@ export const doctorController = {
       res.status(400).json(API_RESPONSE.ERROR(error));
     }
   },
+
+  updateDoctor: async (req: Request, res: Response): Promise<any> => {
+    try {
+      const doctor = await Doctor.findByIdAndUpdate(
+        req.params.doctorId,
+        req.body,
+        {
+          new: true,
+          runValidators: true,
+        }
+      );
+      if (!doctor) {
+        return res
+          .status(404)
+          .json(API_RESPONSE.ERROR({ message: "Doctor not found" }));
+      }
+      res.status(200).json(
+        API_RESPONSE.SUCCESS({
+          doctor,
+          message: "Doctor updated successfully",
+        })
+      );
+    } catch (error) {
+      res.status(500).json(API_RESPONSE.ERROR(error));
+    }
+  },
 };

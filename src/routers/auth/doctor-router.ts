@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { doctorMiddleware } from "../../middlewares/auth/doctor-auth-middlewares";
 import { doctorController } from "../../controllers/auth/doctor-controllers";
+import { authTokenMiddleware } from "../../middlewares/auth/authTokenMiddleware";
 
 const doctorRouter = Router();
 export default doctorRouter;
@@ -23,4 +24,10 @@ doctorRouter.get(
   "/get-doctor/:doctorId",
   doctorMiddleware.getDoctorById,
   doctorController.getDoctorById
+);
+
+doctorRouter.patch(
+  "/update/:doctorId",
+  authTokenMiddleware,
+  doctorController.updateDoctor
 );
