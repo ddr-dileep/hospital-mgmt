@@ -112,4 +112,31 @@ export const doctorController = {
       res.status(500).json(API_RESPONSE.ERROR(error));
     }
   },
+
+  deleteDoctor: async (req: Request, res: Response): Promise<any> => {
+    try {
+      const doctor = await Doctor.findByIdAndUpdate(
+        req.params.doctorId,
+        { isDeleted: true },
+        { new: true }
+      );
+      if (!doctor) {
+        return res
+          .status(404)
+          .json(
+            API_RESPONSE.ERROR({
+              message: "Doctor not found or already deleted",
+            })
+          );
+      }
+      res.status(200).json(
+        API_RESPONSE.SUCCESS({
+          doctor,
+          message: "Doctor deleted successfully",
+        })
+      );
+    } catch (error) {
+      res.status(500).json(API_RESPONSE.ERROR(error));
+    }
+  },
 };

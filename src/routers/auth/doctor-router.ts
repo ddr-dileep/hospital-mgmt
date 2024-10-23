@@ -31,3 +31,9 @@ doctorRouter.patch(
   authTokenMiddleware,
   doctorController.updateDoctor
 );
+
+doctorRouter.delete(
+  "/delete/:doctorId",
+  authTokenMiddleware,
+  doctorController.deleteDoctor
+);
